@@ -3,6 +3,7 @@ import sys
 import SECRETS
 import SEARCH
 
+
 def readCsv():
     with open(SECRETS.csvFile) as csv_file:
         list = []
@@ -10,12 +11,12 @@ def readCsv():
         line_count = 1
         for row in csv_reader:
             if line_count == 0:
-                #print(f'Column names are {", ".join(row)}')
+                # print(f'Column names are {", ".join(row)}')
                 line_count += 1
             else:
                 list.append(row)
                 line_count += 1
-        #print(list)
+        # print(list)
         return list
 
 
@@ -24,6 +25,7 @@ def writeCsv(list):
         csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for row in list:
             csv_writer.writerow(row)
+
 
 def addDB():
     last_id = 0
@@ -44,19 +46,22 @@ def addDB():
 
     print("The new record were added, too see it select -Display-")
 
+
 def displayDB():
     db = readCsv()
     first = True
     for row in db:
 
-        print('%-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s' % (row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]))
+        print('%-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s' % (
+            row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]))
         if first:
-            print("---------------------+----------------------+----------------------+----------------------+----------------------+----------------------+----------------------+----------------------")
+            print(
+                "---------------------+----------------------+----------------------+----------------------+----------------------+----------------------+----------------------+----------------------")
             first = False
-        #print(row)
+        # print(row)
+
 
 def searchDB(possible_searches):
-
     # read csv
 
     csv_file = csv.reader(open('cock.csv', "rb"), delimiter=",")
@@ -81,6 +86,7 @@ def searchDB(possible_searches):
         else:
             print('Please try again.')
 
+
 def delDB():
     searchDB(SEARCH.possible_searches)
     print("\n")
@@ -95,6 +101,7 @@ def delDB():
         print("The item with the ID: %s were removed" % toDel)
     else:
         print("Deleting canceled")
+
 
 def cocktailSelection():
     # possible choices: AddNew, Display, Search
@@ -121,7 +128,7 @@ def cocktailSelection():
         elif choice == "3":
             search_choice = input("""What would you like to search for?
                                      Enter ID, Base, Modifier, Flavoring, Filler, Solids or Spices""")
-                    
+
             if search_choice.lower() == 'id':
                 searchDB(SEARCH.search_id)
 
@@ -141,11 +148,11 @@ def cocktailSelection():
                 searchDB(SEARCH.search_solids)
 
             if search_choice.lower() == 'spices':
-                searchDB(SEARCH.search_spice)            
+                searchDB(SEARCH.search_spice)
 
         elif choice == "4":
             delDB()
-            
+
         elif choice.lower() == "x":
             print("Thank you! Shutting down.")
         else:
